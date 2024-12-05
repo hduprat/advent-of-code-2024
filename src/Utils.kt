@@ -19,3 +19,8 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
  * The cleaner shorthand for printing output.
  */
 fun Any?.println() = println(this)
+
+fun <T> List<T>.isSortedWith(comparator: Comparator<T>): Boolean =
+    this.windowed(2).all { (a, b) -> comparator.compare(a, b) < 0 }
+
+val <T> List<T>.middle get() = this[this.size / 2]
