@@ -24,3 +24,6 @@ fun <T> List<T>.isSortedWith(comparator: Comparator<T>): Boolean =
     this.windowed(2).all { (a, b) -> comparator.compare(a, b) < 0 }
 
 val <T> List<T>.middle get() = this[this.size / 2]
+
+typealias IntVector = Pair<Int, Int>
+operator fun IntVector.plus(other: IntVector) = this.first + other.first to this.second + other.second
