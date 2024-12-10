@@ -48,3 +48,28 @@ operator fun IntVector.times(n: Int): IntVector = n * this.first to n * this.sec
 operator fun Int.times(vec: IntVector): IntVector = vec.times(this)
 
 fun IntVector.inRect(height: Int, width: Int) = this.first in 0 until width && this.second in 0 until height
+
+enum class Direction(val vector: IntVector) {
+    UP(0 to -1),
+    RIGHT(1 to 0),
+    DOWN(0 to 1),
+    LEFT(-1 to 0),
+}
+
+/*
+ * Grid
+ */
+typealias Grid<T> = List<List<T>>
+
+fun <T> Grid<T>.at(point: IntVector): T {
+    val (x, y) = point
+    return this[y][x]
+}
+
+fun <T> Grid<T>.atOrNull(point: IntVector): T? {
+    return try {
+        this.at(point)
+    } catch (exc: Exception) {
+        null
+    }
+}
