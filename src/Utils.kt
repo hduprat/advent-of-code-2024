@@ -2,6 +2,7 @@ import java.math.BigInteger
 import java.security.MessageDigest
 import kotlin.io.path.Path
 import kotlin.io.path.readText
+import kotlin.math.abs
 
 /**
  * Reads lines from the given input txt file.
@@ -48,6 +49,7 @@ operator fun IntVector.times(n: Int): IntVector = n * this.first to n * this.sec
 operator fun Int.times(vec: IntVector): IntVector = vec.times(this)
 
 fun IntVector.inRect(height: Int, width: Int) = this.first in 0 until width && this.second in 0 until height
+val IntVector.norm: Int get() = abs(this.first) + abs(this.second)
 
 enum class Direction(val vector: IntVector) {
     UP(0 to -1),
@@ -55,6 +57,8 @@ enum class Direction(val vector: IntVector) {
     DOWN(0 to 1),
     LEFT(-1 to 0),
 }
+val Direction.next: Direction get() = Direction.entries[(this.ordinal + 1) % Direction.entries.size]
+val Direction.previous: Direction get() = Direction.entries[(this.ordinal - 1).mod(Direction.entries.size)]
 
 /*
  * Grid
@@ -71,5 +75,13 @@ fun <T> Grid<T>.atOrNull(point: IntVector): T? {
         this.at(point)
     } catch (exc: Exception) {
         null
+    }
+}
+
+fun parseGrid(input: List<String>, op: (IntVector, Char) -> Unit): Unit {
+    input.forEachIndexed { y, line ->
+        line.forEachIndexed { x, c ->
+            op(x to y, c)
+        }
     }
 }
