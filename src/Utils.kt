@@ -30,6 +30,15 @@ fun <T> List<T>.combinations(): List<Pair<T, T>> = this.flatMapIndexed { i, elt 
     this.slice(i + 1 until this.size).map { elt to it }
 }
 
+fun <T> List<T>.split(elt: T): List<List<T>>{
+    val index = this.indexOf(elt)
+    if (index < 0) return listOf(this)
+    val list = mutableListOf<List<T>>()
+    list.add(this.take(index))
+    list.addAll(this.slice(index+1 until this.size).split(elt))
+    return list.toList()
+}
+
 val <T> List<T>.middle get() = this[this.size / 2]
 
 /*
