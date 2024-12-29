@@ -28,6 +28,8 @@ class Binary(private val values: List<Boolean>) {
 
     val dec: Int get() = values.fold(0) { acc, isOne -> 2 * acc + if (isOne) 1 else 0 }
 
+    fun toLong(): Long = values.fold(0L) { acc, isOne -> 2 * acc + if (isOne) 1L else 0L }
+
     infix fun xor(other: Binary): Binary {
         val maxLength = maxOf(length, other.length)
         val a = List(maxLength - length) { false } + this.values
